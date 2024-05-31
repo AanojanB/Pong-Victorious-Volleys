@@ -27,13 +27,12 @@ public class gameInterface {
 
     public void playButton(ActionEvent event) throws IOException {
 
-        root = FXMLLoader.load(getClass().getResource("gameFrame.fxml"));
+        root = FXMLLoader.load(getClass().getResource("gameWork.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
     }
-
 }
 
