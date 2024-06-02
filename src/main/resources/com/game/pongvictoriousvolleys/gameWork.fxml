@@ -4,10 +4,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="sceneGame" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.game.pongvictoriousvolleys.playerControls">
+<AnchorPane fx:id="sceneGame" prefHeight="740.0" prefWidth="1375.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.game.pongvictoriousvolleys.playerControls">
    <children>
-      <Rectangle fx:id="playerTwo" arcHeight="5.0" arcWidth="5.0" height="200.0" layoutX="500.0" layoutY="147.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
-      <Rectangle fx:id="playerOne" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="293.0" layoutY="147.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-      <Button layoutX="293.0" layoutY="38.0" mnemonicParsing="false" onAction="#start" text="Button" />
+      <Rectangle fx:id="playerTwo" arcHeight="5.0" arcWidth="5.0" fill="RED" height="200.0" layoutX="1240.0" layoutY="349.0" stroke="RED" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="playerOne" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="83.0" layoutY="361.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+      <Rectangle fx:id="verticalBorderOne" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderTwo" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="133.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderThree" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderFour" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="324.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderFive" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="424.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderSix" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="524.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderSeven" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="74.0" layoutX="677.0" layoutY="642.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderEight" arcHeight="5.0" arcWidth="5.0" fill="RED" height="740.0" layoutX="1358.0" stroke="WHITE" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderNine" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="740.0" layoutY="-1.0" stroke="WHITE" strokeType="INSIDE" width="22.0" />
+      <Rectangle fx:id="verticalBorderNine1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="16.0" layoutX="36.0" layoutY="6.0" stroke="WHITE" strokeType="INSIDE" width="1202.0" />
+      <Rectangle fx:id="verticalBorderNine11" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="8.0" layoutX="75.0" layoutY="722.0" stroke="WHITE" strokeType="INSIDE" width="1268.0" />
+      <Button layoutX="46.0" layoutY="39.0" mnemonicParsing="false" onAction="#start" text="Button" />
    </children>
 </AnchorPane>

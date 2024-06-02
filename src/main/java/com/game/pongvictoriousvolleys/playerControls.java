@@ -28,63 +28,87 @@ public class playerControls implements Initializable {
 
     private BooleanBinding keyPressed = wPressed.or(aPressed).or(sPressed).or(dPressed).or(tPressed).or(fPressed).or(gPressed).or(hPressed);
 
-    private int playerSpeedY = 5;
-    private int playerSpeedX = 2;
+    private int playerOneUpSpeedY = 5;
+    private int playerOneDownSpeedY = 5;
+    private int playerOneForwardSpeedX = 2;
+    private int playerOneBackwardSpeedX = 2;
+
+    private int playerTwoUpSpeedY = 5;
+    private int playerTwoDownSpeedY = 5;
+    private int playerTwoForwardSpeedX = 2;
+    private int playerTwoBackwardSpeedX = 2;
 
     @FXML
     private Rectangle playerOne;
-
     @FXML
     private Rectangle playerTwo;
 
     @FXML
+    private Rectangle verticalBorderOne;
+    @FXML
+    private Rectangle verticalBorderTwo;
+    @FXML
+    private Rectangle verticalBorderThree;
+    @FXML
+    private Rectangle verticalBorderFour;
+    @FXML
+    private Rectangle verticalBorderFive;
+    @FXML
+    private Rectangle verticalBorderSix;
+    @FXML
+    private Rectangle verticalBorderSeven;
+    @FXML
+    private Rectangle verticalBorderEight;
+    @FXML
+    private Rectangle verticalBorderNine;
+
+    @FXML
+    private Rectangle horizontalBorderUp;
+    @FXML
+    private Rectangle horizontalBorderDown;
+
+
+    @FXML
     private AnchorPane sceneGame;
+
 
     @FXML
     void start(ActionEvent event) {
-        playerOne.setLayoutY(200);
-        playerOne.setLayoutX(280);
 
-        playerTwo.setLayoutY(100);
-        playerTwo.setLayoutX(180);
     }
 
-    AnimationTimer timer = new AnimationTimer() {
+    AnimationTimer timerOne = new AnimationTimer() {
         @Override
         public void handle(long timestamp) {
 
             if(wPressed.get()) {
-                playerOne.setLayoutY(playerOne.getLayoutY() - playerSpeedY);
+                playerOne.setLayoutY(playerOne.getLayoutY() - playerOneUpSpeedY);
             }
-
             if(sPressed.get()){
-                playerOne.setLayoutY(playerOne.getLayoutY() + playerSpeedY);
+                playerOne.setLayoutY(playerOne.getLayoutY() + playerOneDownSpeedY);
             }
-
             if(aPressed.get()){
-                playerOne.setLayoutX(playerOne.getLayoutX() - playerSpeedX);
+                playerOne.setLayoutX(playerOne.getLayoutX() - playerOneBackwardSpeedX);
             }
-
             if(dPressed.get()){
-                playerOne.setLayoutX(playerOne.getLayoutX() + playerSpeedX);
+                playerOne.setLayoutX(playerOne.getLayoutX() + playerOneForwardSpeedX);
             }
 
             if(tPressed.get()) {
-                playerTwo.setLayoutY(playerTwo.getLayoutY() - playerSpeedY);
+                playerTwo.setLayoutY(playerTwo.getLayoutY() - playerTwoUpSpeedY);
             }
-
             if(gPressed.get()){
-                playerTwo.setLayoutY(playerTwo.getLayoutY() + playerSpeedY);
+                playerTwo.setLayoutY(playerTwo.getLayoutY() + playerTwoDownSpeedY);
             }
-
             if(fPressed.get()){
-                playerTwo.setLayoutX(playerTwo.getLayoutX() - playerSpeedX);
+                playerTwo.setLayoutX(playerTwo.getLayoutX() - playerTwoBackwardSpeedX);
             }
-
             if(hPressed.get()){
-                playerTwo.setLayoutX(playerTwo.getLayoutX() + playerSpeedX);
+                playerTwo.setLayoutX(playerTwo.getLayoutX() + playerTwoForwardSpeedX);
             }
 
+            restrictedForwardMovement();
+            restrictedBackwardMovement();
         }
     };
 
@@ -94,12 +118,13 @@ public class playerControls implements Initializable {
 
         keyPressed.addListener(((observableValue, aBoolean, t1) -> {
             if(!aBoolean){
-                timer.start();
+                timerOne.start();
             } else {
-                timer.stop();
+                timerOne.stop();
             }
         }));
     }
+
 
     public void movementSetup(){
         sceneGame.setOnKeyPressed(e -> {
@@ -170,5 +195,55 @@ public class playerControls implements Initializable {
             }
         });
     }
+
+    public void restrictedForwardMovement () {
+        if(playerOne.getBoundsInParent().intersects(verticalBorderOne.getBoundsInParent())||playerOne.getBoundsInParent().intersects(verticalBorderTwo.getBoundsInParent())
+                ||playerOne.getBoundsInParent().intersects(verticalBorderThree.getBoundsInParent())||playerOne.getBoundsInParent().intersects(verticalBorderFour.getBoundsInParent())
+                ||playerOne.getBoundsInParent().intersects(verticalBorderFive.getBoundsInParent())||playerOne.getBoundsInParent().intersects(verticalBorderSix.getBoundsInParent())
+                ||playerOne.getBoundsInParent().intersects(verticalBorderSeven.getBoundsInParent())){
+            playerOneForwardSpeedX = 0;
+        }
+        else{
+            playerOneForwardSpeedX = 2;
+        }
+
+        if(playerTwo.getBoundsInParent().intersects(verticalBorderOne.getBoundsInParent())||playerTwo.getBoundsInParent().intersects(verticalBorderTwo.getBoundsInParent())
+                ||playerTwo.getBoundsInParent().intersects(verticalBorderThree.getBoundsInParent())||playerTwo.getBoundsInParent().intersects(verticalBorderFour.getBoundsInParent())
+                ||playerTwo.getBoundsInParent().intersects(verticalBorderFive.getBoundsInParent())||playerTwo.getBoundsInParent().intersects(verticalBorderSix.getBoundsInParent())
+                ||playerTwo.getBoundsInParent().intersects(verticalBorderSeven.getBoundsInParent())){
+            playerTwoBackwardSpeedX = 0;
+        }
+        else{
+            playerTwoBackwardSpeedX = 2;
+        }
+
+    }
+
+    //Change vertical border eight and nine into goal box varaibles, and later make when ball makes contact with goal box area score increase also put the if statements into the function above
+    public void restrictedBackwardMovement(){
+        if(playerOne.getBoundsInParent().intersects(verticalBorderEight.getBoundsInParent())||playerOne.getBoundsInParent().intersects(verticalBorderNine.getBoundsInParent())){
+            playerOneBackwardSpeedX = 0;
+        }
+        else{
+            playerOneBackwardSpeedX = 2;
+        }
+
+        if(playerTwo.getBoundsInParent().intersects(verticalBorderEight.getBoundsInParent())||playerTwo.getBoundsInParent().intersects(verticalBorderNine.getBoundsInParent())){
+            playerTwoForwardSpeedX = 0;
+        }
+        else{
+            playerTwoForwardSpeedX = 2;
+        }
+    }
+
+    public void restrictedMovementY (){
+        if(playerOne.getBoundsInParent().intersects(horizontalBorderUp.getBoundsInParent())){
+            playerOneUpSpeedY = 0;
+        }
+        else {
+            playerOneUpSpeedY = 5;
+        }
+    }
+
 }
 
