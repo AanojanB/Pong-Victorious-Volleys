@@ -21,12 +21,12 @@ public class playerControls implements Initializable {
     private BooleanProperty sPressed = new SimpleBooleanProperty();
     private BooleanProperty dPressed = new SimpleBooleanProperty();
 
-    private BooleanProperty tPressed = new SimpleBooleanProperty();
-    private BooleanProperty fPressed = new SimpleBooleanProperty();
-    private BooleanProperty gPressed = new SimpleBooleanProperty();
-    private BooleanProperty hPressed = new SimpleBooleanProperty();
+    private BooleanProperty upPressed = new SimpleBooleanProperty();
+    private BooleanProperty leftPressed = new SimpleBooleanProperty();
+    private BooleanProperty downPressed = new SimpleBooleanProperty();
+    private BooleanProperty rightPressed = new SimpleBooleanProperty();
 
-    private BooleanBinding keyPressed = wPressed.or(aPressed).or(sPressed).or(dPressed).or(tPressed).or(fPressed).or(gPressed).or(hPressed);
+    private BooleanBinding keyPressed = wPressed.or(aPressed).or(sPressed).or(dPressed).or(upPressed).or(leftPressed).or(downPressed).or(rightPressed);
 
     private int playerSpeedY = 5;
     private int playerSpeedX = 2;
@@ -69,19 +69,19 @@ public class playerControls implements Initializable {
                 playerOne.setLayoutX(playerOne.getLayoutX() + playerSpeedX);
             }
 
-            if(tPressed.get()) {
+            if(upPressed.get()) {
                 playerTwo.setLayoutY(playerTwo.getLayoutY() - playerSpeedY);
             }
 
-            if(gPressed.get()){
+            if(downPressed.get()){
                 playerTwo.setLayoutY(playerTwo.getLayoutY() + playerSpeedY);
             }
 
-            if(fPressed.get()){
+            if(leftPressed.get()){
                 playerTwo.setLayoutX(playerTwo.getLayoutX() - playerSpeedX);
             }
 
-            if(hPressed.get()){
+            if(rightPressed.get()){
                 playerTwo.setLayoutX(playerTwo.getLayoutX() + playerSpeedX);
             }
 
@@ -119,20 +119,20 @@ public class playerControls implements Initializable {
                 dPressed.set(true);
             }
 
-            if(e.getCode() == KeyCode.T) {
-                tPressed.set(true);
+            if(e.getCode() == KeyCode.KP_UP) {
+                upPressed.set(true);
             }
 
-            if(e.getCode() == KeyCode.F) {
-                fPressed.set(true);
+            if(e.getCode() == KeyCode.KP_LEFT) {
+                leftPressed.set(true);
             }
 
-            if(e.getCode() == KeyCode.G) {
-                gPressed.set(true);
+            if(e.getCode() == KeyCode.KP_DOWN) {
+                downPressed.set(true);
             }
 
-            if(e.getCode() == KeyCode.H) {
-                hPressed.set(true);
+            if(e.getCode() == KeyCode.KP_RIGHT) {
+                rightPressed.set(true);
             }
         });
 
@@ -153,20 +153,20 @@ public class playerControls implements Initializable {
                 dPressed.set(false);
             }
 
-            if(e.getCode() == KeyCode.T) {
-                tPressed.set(false);
+            if(e.getCode() == KeyCode.KP_UP) {
+                upPressed.set(false);
             }
 
-            if(e.getCode() == KeyCode.F) {
-                fPressed.set(false);
+            if(e.getCode() == KeyCode.KP_LEFT) {
+                leftPressed.set(false);
             }
 
-            if(e.getCode() == KeyCode.G) {
-                gPressed.set(false);
+            if(e.getCode() == KeyCode.KP_DOWN) {
+                downPressed.set(false);
             }
 
-            if(e.getCode() == KeyCode.H) {
-                hPressed.set(false);
+            if(e.getCode() == KeyCode.KP_RIGHT) {
+                rightPressed.set(false);
             }
         });
     }
