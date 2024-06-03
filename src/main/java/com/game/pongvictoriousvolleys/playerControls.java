@@ -1,16 +1,28 @@
 package com.game.pongvictoriousvolleys;
 
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,6 +56,9 @@ public class playerControls implements Initializable {
     private Rectangle playerTwo;
 
     @FXML
+    private Circle gameBall;
+
+    @FXML
     private Rectangle verticalBorderOne;
     @FXML
     private Rectangle verticalBorderTwo;
@@ -57,25 +72,22 @@ public class playerControls implements Initializable {
     private Rectangle verticalBorderSix;
     @FXML
     private Rectangle verticalBorderSeven;
-    @FXML
-    private Rectangle verticalBorderEight;
-    @FXML
-    private Rectangle verticalBorderNine;
 
     @FXML
-    private Rectangle horizontalBorderUp;
+    private Label playerOneScore;
     @FXML
-    private Rectangle horizontalBorderDown;
+    private Label playerTwoScore;
 
 
     @FXML
     private AnchorPane sceneGame;
 
-
+    //Maybe Need
     @FXML
     void start(ActionEvent event) {
 
     }
+
 
     AnimationTimer timerOne = new AnimationTimer() {
         @Override
@@ -108,13 +120,57 @@ public class playerControls implements Initializable {
             }
 
             restrictedForwardMovement();
-            restrictedBackwardMovement();
+            gameBorder();
         }
     };
+
+
+    //1 Frame evey 10 millis, which means 100 FPS
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+
+        double circleMovementX = 1.5;
+        double circleMovementY = 1.5;
+
+
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            gameBall.setLayoutX(gameBall.getLayoutX() + circleMovementX);
+            gameBall.setLayoutY(gameBall.getLayoutY() + circleMovementY);
+
+            Bounds bounds = sceneGame.getBoundsInLocal();
+            boolean rightCircleBorder = gameBall.getLayoutX() >= (bounds.getMaxX() - gameBall.getRadius());
+            boolean leftCircleBorder = gameBall.getLayoutX() <= (bounds.getMinX() + gameBall.getRadius());
+            boolean bottomCircleBorder = gameBall.getLayoutY() >= (bounds.getMaxY() - gameBall.getRadius());
+            boolean topCircleBorder = gameBall.getLayoutY() <= (bounds.getMinY() + gameBall.getRadius());
+
+
+
+            if (rightCircleBorder || leftCircleBorder) {
+                circleMovementX = -1 * circleMovementX;
+                gameBall.setLayoutX(688);
+                gameBall.setLayoutY(324);
+                circleMovementX = 1.5;
+            }
+            if (bottomCircleBorder || topCircleBorder) {
+                circleMovementY = -1 * circleMovementY;
+            }
+
+            if(playerOne.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
+                circleMovementX = -1.5 * circleMovementX;
+            }
+
+            if(playerTwo.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
+                circleMovementX = -1.5 * circleMovementX;
+            }
+        }
+    }));
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         movementSetup();
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
 
         keyPressed.addListener(((observableValue, aBoolean, t1) -> {
             if(!aBoolean){
@@ -216,33 +272,31 @@ public class playerControls implements Initializable {
         else{
             playerTwoBackwardSpeedX = 2;
         }
-
     }
 
-    //Change vertical border eight and nine into goal box varaibles, and later make when ball makes contact with goal box area score increase also put the if statements into the function above
-    public void restrictedBackwardMovement(){
-        if(playerOne.getBoundsInParent().intersects(verticalBorderEight.getBoundsInParent())||playerOne.getBoundsInParent().intersects(verticalBorderNine.getBoundsInParent())){
-            playerOneBackwardSpeedX = 0;
+    public void gameBorder () {
+        double borderLeft = 0;
+        double borderRight = sceneGame.getWidth() - playerOne.getHeight();
+        double borderBottom = sceneGame.getHeight() - playerOne.getHeight();
+        double borderTop = 0;
+
+        /*if(playerOne.getLayoutX() >= borderRight){
+            playerOne.setLayoutX(borderRight);
+            System.out.println("W");
+        }*/
+        if(playerOne.getLayoutX() <= borderLeft){
+            playerOne.setLayoutX(borderLeft);
+            System.out.println("L");
         }
-        else{
-            playerOneBackwardSpeedX = 2;
+        if(playerOne.getLayoutY() <= borderTop){
+            playerOne.setLayoutY(borderTop);
+            System.out.println("X");
+        }
+        if(playerOne.getLayoutY() >= borderBottom){
+            playerOne.setLayoutY(borderBottom);
+            System.out.println("D");
         }
 
-        if(playerTwo.getBoundsInParent().intersects(verticalBorderEight.getBoundsInParent())||playerTwo.getBoundsInParent().intersects(verticalBorderNine.getBoundsInParent())){
-            playerTwoForwardSpeedX = 0;
-        }
-        else{
-            playerTwoForwardSpeedX = 2;
-        }
-    }
-
-    public void restrictedMovementY (){
-        if(playerOne.getBoundsInParent().intersects(horizontalBorderUp.getBoundsInParent())){
-            playerOneUpSpeedY = 0;
-        }
-        else {
-            playerOneUpSpeedY = 5;
-        }
     }
 
 }

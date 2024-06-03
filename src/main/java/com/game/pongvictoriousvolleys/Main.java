@@ -18,6 +18,8 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setHeight(800);
+            stage.setWidth(1375);
             stage.setResizable(false);
             stage.show();
 
