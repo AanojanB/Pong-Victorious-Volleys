@@ -15,16 +15,6 @@ public class gameInterface {
     private Scene scene;
     private Parent root;
 
-    public void backButton(ActionEvent event) throws IOException {
-
-        root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-    }
-
     public void playButton(ActionEvent event) throws IOException {
 
         root = FXMLLoader.load(getClass().getResource("gameWork.fxml"));

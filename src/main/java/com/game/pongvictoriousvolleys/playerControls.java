@@ -13,14 +13,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -74,10 +78,13 @@ public class playerControls implements Initializable {
     private Rectangle verticalBorderSeven;
 
     @FXML
-    private Label playerOneScore;
+    private Label scoreOne;
     @FXML
-    private Label playerTwoScore;
-
+    private Label scoreTwo;
+    @FXML
+    private Label winMessage;
+    @FXML
+    private Button playAgain;
 
     @FXML
     private AnchorPane sceneGame;
@@ -87,7 +94,6 @@ public class playerControls implements Initializable {
     void start(ActionEvent event) {
 
     }
-
 
     AnimationTimer timerOne = new AnimationTimer() {
         @Override
@@ -124,12 +130,19 @@ public class playerControls implements Initializable {
         }
     };
 
+    double circleMovementX = 5.5;
+    double circleMovementY = 5.5;
+    int playerOneScore = 0;
+    String stringOneScore = "";
+    int playerTwoScore = 0;
+    String stringTwoScore = "";
+    String playerOneWins = "Player One Wins";
+    String playerTwoWins = "Player Two Wins";
+    int totalPlayerWins = 0;
 
     //1 Frame evey 10 millis, which means 100 FPS
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
-        double circleMovementX = 1.5;
-        double circleMovementY = 1.5;
 
 
         @Override
@@ -145,12 +158,7 @@ public class playerControls implements Initializable {
 
 
 
-            if (rightCircleBorder || leftCircleBorder) {
-                circleMovementX = -1 * circleMovementX;
-                gameBall.setLayoutX(688);
-                gameBall.setLayoutY(324);
-                circleMovementX = 1.5;
-            }
+
             if (bottomCircleBorder || topCircleBorder) {
                 circleMovementY = -1 * circleMovementY;
             }
@@ -162,9 +170,47 @@ public class playerControls implements Initializable {
             if(playerTwo.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
                 circleMovementX = -1.5 * circleMovementX;
             }
+
+            if(rightCircleBorder){
+                playerOneScore++;
+                stringOneScore = Integer.toString(playerOneScore);
+                scoreOne.setText(stringOneScore);
+
+                gameBall.setLayoutX(688);
+                gameBall.setLayoutY(324);
+                circleMovementX = -5.5;
+            }
+
+            if(leftCircleBorder){
+                playerTwoScore++;
+                stringTwoScore = Integer.toString(playerTwoScore);
+                scoreTwo.setText(stringTwoScore);
+
+                gameBall.setLayoutX(688);
+                gameBall.setLayoutY(324);
+                circleMovementX = 5.5;
+            }
+
+            if (playerOneScore == 10) {
+                winMessage.setText(playerOneWins);
+                winMessage.setVisible(true);
+                timeline.stop();
+                playAgain.setVisible(true);
+                timeline.stop();
+                timerOne.stop();
+                System.out.println(totalPlayerWins);
+            }
+
+            if (playerTwoScore == 10) {
+                winMessage.setText(playerTwoWins);
+                winMessage.setVisible(true);
+                playAgain.setVisible(true);
+                timeline.stop();
+                timerOne.stop();
+                System.out.println(totalPlayerWins);
+            }
         }
     }));
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -275,27 +321,48 @@ public class playerControls implements Initializable {
     }
 
     public void gameBorder () {
+
         double borderLeft = 0;
-        double borderRight = sceneGame.getWidth() - playerOne.getHeight();
+        double borderRight = sceneGame.getWidth() - playerOne.getWidth();
         double borderBottom = sceneGame.getHeight() - playerOne.getHeight();
         double borderTop = 0;
 
-        /*if(playerOne.getLayoutX() >= borderRight){
-            playerOne.setLayoutX(borderRight);
-            System.out.println("W");
-        }*/
+        double borderRight1 = sceneGame.getWidth() - playerTwo.getWidth();
+        double borderBottom1 = sceneGame.getHeight() - playerTwo.getHeight();
+        double borderTop1 = 0;
+
         if(playerOne.getLayoutX() <= borderLeft){
             playerOne.setLayoutX(borderLeft);
-            System.out.println("L");
         }
         if(playerOne.getLayoutY() <= borderTop){
             playerOne.setLayoutY(borderTop);
-            System.out.println("X");
         }
         if(playerOne.getLayoutY() >= borderBottom){
             playerOne.setLayoutY(borderBottom);
-            System.out.println("D");
         }
+
+        if(playerTwo.getLayoutX() >= borderRight1){
+            playerTwo.setLayoutX(borderRight);
+        }
+        if(playerTwo.getLayoutY() <= borderTop1){
+            playerTwo.setLayoutY(borderTop);
+        }
+        if(playerTwo.getLayoutY() >= borderBottom1) {
+            playerTwo.setLayoutY(borderBottom);
+        }
+    }
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    public void playAgainButton(ActionEvent event) throws IOException {
+
+        root = FXMLLoader.load(getClass().getResource("gameWork.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
