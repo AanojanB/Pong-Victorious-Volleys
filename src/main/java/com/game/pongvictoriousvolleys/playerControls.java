@@ -89,6 +89,12 @@ public class playerControls implements Initializable {
     @FXML
     private AnchorPane sceneGame;
 
+    boolean winStrakOne = false;
+    boolean winStrakTwo = false;
+
+    int onePCounter = 0;
+    int twoPCounter = 0;
+
     //Maybe Need
     @FXML
     void start(ActionEvent event) {
@@ -151,8 +157,6 @@ public class playerControls implements Initializable {
             gameBall.setLayoutY(gameBall.getLayoutY() + circleMovementY);
 
             Bounds bounds = sceneGame.getBoundsInLocal();
-            boolean rightCircleBorder = gameBall.getLayoutX() >= (bounds.getMaxX() - gameBall.getRadius());
-            boolean leftCircleBorder = gameBall.getLayoutX() <= (bounds.getMinX() + gameBall.getRadius());
             boolean bottomCircleBorder = gameBall.getLayoutY() >= (bounds.getMaxY() - gameBall.getRadius());
             boolean topCircleBorder = gameBall.getLayoutY() <= (bounds.getMinY() + gameBall.getRadius());
 
@@ -171,7 +175,8 @@ public class playerControls implements Initializable {
                 circleMovementX = -1.5 * circleMovementX;
             }
 
-            if(rightCircleBorder){
+            //Change values, values should be when the ball is completely out the screen on the right end
+            if(gameBall.getLayoutX() > 2000){
                 playerOneScore++;
                 stringOneScore = Integer.toString(playerOneScore);
                 scoreOne.setText(stringOneScore);
@@ -181,7 +186,8 @@ public class playerControls implements Initializable {
                 circleMovementX = -5.5;
             }
 
-            if(leftCircleBorder){
+            //Change values, values should be when the ball is completely out the screen on the left end
+            if(gameBall.getLayoutX() < -300){
                 playerTwoScore++;
                 stringTwoScore = Integer.toString(playerTwoScore);
                 scoreTwo.setText(stringTwoScore);
@@ -193,6 +199,8 @@ public class playerControls implements Initializable {
 
             if (playerOneScore == 10) {
                 winMessage.setText(playerOneWins);
+                winStrakOne= true;
+                winCount();
                 winMessage.setVisible(true);
                 timeline.stop();
                 playAgain.setVisible(true);
@@ -203,6 +211,8 @@ public class playerControls implements Initializable {
 
             if (playerTwoScore == 10) {
                 winMessage.setText(playerTwoWins);
+                winStrakTwo= true;
+                winCount();
                 winMessage.setVisible(true);
                 playAgain.setVisible(true);
                 timeline.stop();
@@ -358,12 +368,24 @@ public class playerControls implements Initializable {
 
     public void playAgainButton(ActionEvent event) throws IOException {
 
-        root = FXMLLoader.load(getClass().getResource("gameWork.fxml"));
+        root = FXMLLoader.load(getClass().getResource("secondInterface.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void winCount () {
+        if((winStrakOne == true)){
+            System.out.println("test win");
+            onePCounter++;
+        }
+
+        if((winStrakTwo == true)){
+            System.out.println("test win 2");
+            twoPCounter++;
+        }
     }
 
 }
