@@ -7,6 +7,7 @@ module com.game.pongvictoriousvolleys {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
+    requires jdk.xml.dom;
 
     opens com.game.pongvictoriousvolleys to javafx.fxml;
     exports com.game.pongvictoriousvolleys;

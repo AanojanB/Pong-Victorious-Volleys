@@ -19,7 +19,7 @@
       <Rectangle fx:id="verticalBorderSix" arcHeight="5.0" arcWidth="5.0" fill="#adefd1" height="74.0" layoutX="677.0" layoutY="524.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
       <Rectangle fx:id="verticalBorderSeven" arcHeight="5.0" arcWidth="5.0" fill="#adefd1" height="74.0" layoutX="677.0" layoutY="642.0" stroke="BLACK" strokeType="INSIDE" width="22.0" />
       <Circle fx:id="gameBall" fill="#adefd1" layoutX="688.0" layoutY="324.0" radius="29.0" stroke="WHITE" strokeType="INSIDE" />
-      <Button layoutX="46.0" layoutY="39.0" mnemonicParsing="false" onAction="#start" style="-fx-background-color: #ADEFD1;" text="Back" textFill="#00203f" />
+      <Button fx:id="backButton" layoutX="46.0" layoutY="39.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: #ADEFD1;" text="Back" textFill="#00203f" />
       <Label fx:id="scoreOne" layoutX="623.0" layoutY="25.0" prefHeight="153.0" prefWidth="72.0" text="0" textFill="#a4b0e5">
          <font>
             <Font size="54.0" />
@@ -39,5 +39,6 @@
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
+      <Rectangle fx:id="ice" arcHeight="5.0" arcWidth="5.0" fill="#d4eaff" height="84.0" layoutX="737.0" layoutY="307.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="104.0" />
    </children>
 </AnchorPane>

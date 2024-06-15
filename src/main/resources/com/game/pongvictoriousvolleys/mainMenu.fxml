@@ -17,7 +17,7 @@
             <Font name="Impact" size="64.0" />
          </font>
          <textFill>
-            <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0">
+            <LinearGradient cycleMethod="REFLECT" endX="0.8578199052132701" endY="1.0" startX="0.4928909952606635" startY="1.0">
                <stops>
                   <Stop>
                      <color>

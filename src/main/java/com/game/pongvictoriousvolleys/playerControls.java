@@ -24,6 +24,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.io.*;
 
 
 import java.io.IOException;
@@ -44,15 +45,18 @@ public class playerControls implements Initializable {
 
     private BooleanBinding keyPressed = wPressed.or(aPressed).or(sPressed).or(dPressed).or(tPressed).or(fPressed).or(gPressed).or(hPressed);
 
-    private int playerOneUpSpeedY = 7;
-    private int playerOneDownSpeedY = 7;
-    private int playerOneForwardSpeedX = 3;
-    private int playerOneBackwardSpeedX = 3;
+    private double playerOneUpSpeedY = 7;
+    private double playerOneDownSpeedY = 7;
+    private double playerOneForwardSpeedX = 3;
+    private double playerOneBackwardSpeedX = 3;
 
-    private int playerTwoUpSpeedY = 7;
-    private int playerTwoDownSpeedY = 7;
-    private int playerTwoForwardSpeedX = 3;
-    private int playerTwoBackwardSpeedX = 3;
+    private double playerTwoUpSpeedY = 7;
+    private double playerTwoDownSpeedY = 7;
+    private double playerTwoForwardSpeedX = 3;
+    private double playerTwoBackwardSpeedX = 3;
+
+    private int winStreakOne = 0;
+    private int winStreakTwo = 0;
 
     @FXML
     private Rectangle playerOne;
@@ -85,6 +89,12 @@ public class playerControls implements Initializable {
     private Label winMessage;
     @FXML
     private Button playAgain;
+    @FXML
+    private Rectangle ice;
+    @FXML
+    private Label streakOne;
+    @FXML
+    private Label streakTwo;
 
     @FXML
     private AnchorPane sceneGame;
@@ -126,14 +136,20 @@ public class playerControls implements Initializable {
 
             restrictedForwardMovement();
             gameBorder();
+
+            ice.setLayoutX(-50000);
+
+
+
+
         }
     };
 
     double circleMovementX = 2.5;
     double circleMovementY = 2.5;
-    int playerOneScore = 0;
+    int playerOneScore = 9;
     String stringOneScore = "";
-    int playerTwoScore = 0;
+    int playerTwoScore = 9;
     String stringTwoScore = "";
     String playerOneWins = "Player One Wins";
     String playerTwoWins = "Player Two Wins";
@@ -160,10 +176,18 @@ public class playerControls implements Initializable {
 
             if(playerOne.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
                 circleMovementX = -1.5 * circleMovementX;
+                playerOneUpSpeedY = 7;
+                playerOneDownSpeedY = 7;
+                playerOneForwardSpeedX = 3;
+                playerOneBackwardSpeedX = 3;
             }
 
             if(playerTwo.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
                 circleMovementX = -1.5 * circleMovementX;
+                playerTwoUpSpeedY = 7;
+                playerTwoDownSpeedY = 7;
+                playerTwoForwardSpeedX = 3;
+                playerTwoBackwardSpeedX = 3;
             }
 
             //Change values, values should be when the ball is completely out the screen on the right end
@@ -194,6 +218,9 @@ public class playerControls implements Initializable {
                 timeline.stop();
                 playAgain.setVisible(true);
                 timeline.stop();
+                winStreakOne++;
+                System.out.println(winStreakOne);
+                winStreakTwo = 0;
             }
 
             if (playerTwoScore == 10) {
@@ -201,6 +228,9 @@ public class playerControls implements Initializable {
                 winMessage.setVisible(true);
                 playAgain.setVisible(true);
                 timeline.stop();
+                winStreakTwo++;
+                System.out.println(winStreakTwo);
+                winStreakOne = 0;
             }
         }
     }));
@@ -210,6 +240,9 @@ public class playerControls implements Initializable {
         movementSetup();
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+        winStreakOne = readIntegerOne();
+        winStreakTwo = readIntegerTwo();
 
         keyPressed.addListener(((observableValue, aBoolean, t1) -> {
             if(!aBoolean){
@@ -313,6 +346,10 @@ public class playerControls implements Initializable {
         }
     }
 
+    public void setWinStreak () {
+
+    }
+
     public void gameBorder () {
 
         double borderLeft = 0;
@@ -351,6 +388,20 @@ public class playerControls implements Initializable {
 
     public void playAgainButton(ActionEvent event) throws IOException {
 
+        playAgain.setVisible(false);
+        winMessage.setVisible(false);
+        playerOneScore = 0;
+        playerTwoScore = 0;
+        timeline.play();
+        scoreOne.setText("0");
+        scoreTwo.setText("0");
+
+        winIntegerOne(winStreakOne);
+        winIntegerTwo(winStreakTwo);
+    }
+
+    public void backButton(ActionEvent event) throws IOException {
+
         root = FXMLLoader.load(getClass().getResource("secondInterface.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -359,6 +410,86 @@ public class playerControls implements Initializable {
 
     }
 
+    int min = 1;
+    int max = 2;
+
+    int randomInt = (int)Math.floor(Math.random() * (max - min + 1) + min);
+
+    public void iceCube () {
+
+        if((playerTwoScore >= 5 || playerOneScore >= 5)) {
+            ice.setVisible(true);
+            if (randomInt == 2) {
+                ice.setLayoutX(737);
+                ice.setLayoutY(307);
+            }
+            else {
+                ice.setLayoutX(545);
+                ice.setLayoutY(382);
+            }
+        }
+
+        if(playerOne.getBoundsInParent().intersects(ice.getBoundsInParent())) {
+            playerTwoBackwardSpeedX = playerTwoBackwardSpeedX - 2;
+            playerTwoForwardSpeedX = playerTwoForwardSpeedX - 2;
+            playerTwoUpSpeedY = playerTwoUpSpeedY-5;
+            playerTwoDownSpeedY = playerTwoDownSpeedY-5;
+            ice.setLayoutX(5000);
+        }
+
+        if (playerTwo.getBoundsInParent().intersects(ice.getBoundsInParent())) {
+            playerOneBackwardSpeedX = playerOneBackwardSpeedX-2;
+            playerOneForwardSpeedX = playerOneForwardSpeedX -2;
+            playerOneUpSpeedY = playerOneUpSpeedY-5;
+            playerOneDownSpeedY = playerOneDownSpeedY-5;
+        }
+    }
+
+
+    private static final String saveValueOne = "keep-win-one-integer.txt";
+    private static final String saveValueTwo = "keep-win-two-integer.txt";
+
+    public static void winIntegerOne(int num) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(saveValueOne))) {
+            writer.println(num);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int readIntegerOne() {
+        int num = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(saveValueOne))) {
+            String line = reader.readLine();
+            if (line != null) {
+                num = Integer.parseInt(line);
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return num;
+    }
+
+    public static void winIntegerTwo(int num) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(saveValueTwo))) {
+            writer.println(num);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int readIntegerTwo() {
+        int num = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(saveValueTwo))) {
+            String line = reader.readLine();
+            if (line != null) {
+                num = Integer.parseInt(line);
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return num;
+    }
 
 }
 
