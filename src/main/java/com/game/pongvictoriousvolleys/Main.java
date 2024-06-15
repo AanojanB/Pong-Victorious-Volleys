@@ -22,7 +22,6 @@ public class Main extends Application {
             stage.setWidth(1375);
             stage.setResizable(false);
             stage.show();
-
     }
 
     public static void main(String[] args) {

@@ -104,6 +104,8 @@ public class playerControls implements Initializable {
 
     }
 
+
+
     AnimationTimer timerOne = new AnimationTimer() {
         @Override
         public void handle(long timestamp) {
@@ -138,21 +140,22 @@ public class playerControls implements Initializable {
             gameBorder();
 
             ice.setLayoutX(-50000);
-
-
-
-
+            iceCube();
         }
     };
 
-    double circleMovementX = 2.5;
-    double circleMovementY = 2.5;
-    int playerOneScore = 9;
+    double circleMovementX = .5;
+    double circleMovementY = .5;
+    int playerOneScore = 4;
     String stringOneScore = "";
-    int playerTwoScore = 9;
+    int playerTwoScore = 4;
     String stringTwoScore = "";
     String playerOneWins = "Player One Wins";
     String playerTwoWins = "Player Two Wins";
+    String showStreakOne = "";
+    String showStreakTwo = "";
+
+
 
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
@@ -169,25 +172,18 @@ public class playerControls implements Initializable {
 
 
 
-
             if (bottomCircleBorder || topCircleBorder) {
                 circleMovementY = -1 * circleMovementY;
             }
 
             if(playerOne.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
                 circleMovementX = -1.5 * circleMovementX;
-                playerOneUpSpeedY = 7;
-                playerOneDownSpeedY = 7;
-                playerOneForwardSpeedX = 3;
-                playerOneBackwardSpeedX = 3;
+
             }
 
             if(playerTwo.getBoundsInParent().intersects(gameBall.getBoundsInParent())){
                 circleMovementX = -1.5 * circleMovementX;
-                playerTwoUpSpeedY = 7;
-                playerTwoDownSpeedY = 7;
-                playerTwoForwardSpeedX = 3;
-                playerTwoBackwardSpeedX = 3;
+
             }
 
             //Change values, values should be when the ball is completely out the screen on the right end
@@ -199,6 +195,14 @@ public class playerControls implements Initializable {
                 gameBall.setLayoutX(688);
                 gameBall.setLayoutY(324);
                 circleMovementX =-2.5;
+                playerTwoUpSpeedY = 7;
+                playerTwoDownSpeedY = 7;
+                playerTwoForwardSpeedX = 3;
+                playerTwoBackwardSpeedX = 3;
+                playerOneUpSpeedY = 7;
+                playerOneDownSpeedY = 7;
+                playerOneForwardSpeedX = 3;
+                playerOneBackwardSpeedX = 3;
             }
 
             //Change values, values should be when the ball is completely out the screen on the left end
@@ -210,6 +214,14 @@ public class playerControls implements Initializable {
                 gameBall.setLayoutX(688);
                 gameBall.setLayoutY(324);
                 circleMovementX =2.5;
+                playerTwoUpSpeedY = 7;
+                playerTwoDownSpeedY = 7;
+                playerTwoForwardSpeedX = 3;
+                playerTwoBackwardSpeedX = 3;
+                playerOneUpSpeedY = 7;
+                playerOneDownSpeedY = 7;
+                playerOneForwardSpeedX = 3;
+                playerOneBackwardSpeedX = 3;
             }
 
             if (playerOneScore == 10) {
@@ -219,8 +231,14 @@ public class playerControls implements Initializable {
                 playAgain.setVisible(true);
                 timeline.stop();
                 winStreakOne++;
-                System.out.println(winStreakOne);
                 winStreakTwo = 0;
+                showStreakOne = Integer.toString(winStreakOne);
+                showStreakTwo = Integer.toString(winStreakTwo);
+                streakOne.setVisible(true);
+                streakTwo.setVisible(true);
+                streakOne.setText("Win Streak: " + showStreakOne);
+                streakTwo.setText("Win Streak: " + showStreakTwo);
+
             }
 
             if (playerTwoScore == 10) {
@@ -229,9 +247,17 @@ public class playerControls implements Initializable {
                 playAgain.setVisible(true);
                 timeline.stop();
                 winStreakTwo++;
-                System.out.println(winStreakTwo);
                 winStreakOne = 0;
+                showStreakOne = Integer.toString(winStreakOne);
+                showStreakTwo = Integer.toString(winStreakTwo);
+                streakOne.setVisible(true);
+                streakTwo.setVisible(true);
+                streakOne.setText("Win Streak: " + showStreakOne);
+                streakTwo.setText("Win Streak: " + showStreakTwo);
             }
+
+
+
         }
     }));
 
@@ -346,9 +372,6 @@ public class playerControls implements Initializable {
         }
     }
 
-    public void setWinStreak () {
-
-    }
 
     public void gameBorder () {
 
@@ -396,6 +419,9 @@ public class playerControls implements Initializable {
         scoreOne.setText("0");
         scoreTwo.setText("0");
 
+        streakOne.setVisible(false);
+        streakTwo.setVisible(false);
+
         winIntegerOne(winStreakOne);
         winIntegerTwo(winStreakTwo);
     }
@@ -410,38 +436,38 @@ public class playerControls implements Initializable {
 
     }
 
-    int min = 1;
-    int max = 2;
-
-    int randomInt = (int)Math.floor(Math.random() * (max - min + 1) + min);
 
     public void iceCube () {
 
-        if((playerTwoScore >= 5 || playerOneScore >= 5)) {
-            ice.setVisible(true);
-            if (randomInt == 2) {
+        if((playerTwoScore == 5 || playerOneScore == 5)) {
+            if (playerTwoScore < playerOneScore) {
                 ice.setLayoutX(737);
                 ice.setLayoutY(307);
+                ice.setVisible(true);
             }
-            else {
+            else if (playerTwoScore > playerOneScore) {
                 ice.setLayoutX(545);
                 ice.setLayoutY(382);
+                ice.setVisible(true);
             }
         }
 
         if(playerOne.getBoundsInParent().intersects(ice.getBoundsInParent())) {
-            playerTwoBackwardSpeedX = playerTwoBackwardSpeedX - 2;
-            playerTwoForwardSpeedX = playerTwoForwardSpeedX - 2;
-            playerTwoUpSpeedY = playerTwoUpSpeedY-5;
-            playerTwoDownSpeedY = playerTwoDownSpeedY-5;
+            playerTwoBackwardSpeedX = 0;
+            playerTwoForwardSpeedX = 0;
+            playerTwoUpSpeedY = 0;
+            playerTwoDownSpeedY = 0;
+            ice.setVisible(false);
             ice.setLayoutX(5000);
         }
 
         if (playerTwo.getBoundsInParent().intersects(ice.getBoundsInParent())) {
-            playerOneBackwardSpeedX = playerOneBackwardSpeedX-2;
-            playerOneForwardSpeedX = playerOneForwardSpeedX -2;
-            playerOneUpSpeedY = playerOneUpSpeedY-5;
-            playerOneDownSpeedY = playerOneDownSpeedY-5;
+            playerOneBackwardSpeedX = 0;
+            playerOneForwardSpeedX = 0;
+            playerOneUpSpeedY = 0;
+            playerOneDownSpeedY = 0;
+            ice.setVisible(false);
+            ice.setLayoutX(5000);
         }
     }
 
@@ -449,46 +475,46 @@ public class playerControls implements Initializable {
     private static final String saveValueOne = "keep-win-one-integer.txt";
     private static final String saveValueTwo = "keep-win-two-integer.txt";
 
-    public static void winIntegerOne(int num) {
+    public static void winIntegerOne(int winsOne) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(saveValueOne))) {
-            writer.println(num);
+            writer.println(winsOne);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static int readIntegerOne() {
-        int num = 0;
+        int winsOne = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(saveValueOne))) {
             String line = reader.readLine();
             if (line != null) {
-                num = Integer.parseInt(line);
+                winsOne = Integer.parseInt(line);
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
-        return num;
+        return winsOne;
     }
 
-    public static void winIntegerTwo(int num) {
+    public static void winIntegerTwo(int winsTwo) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(saveValueTwo))) {
-            writer.println(num);
+            writer.println(winsTwo);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static int readIntegerTwo() {
-        int num = 0;
+        int winsTwo = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(saveValueTwo))) {
             String line = reader.readLine();
             if (line != null) {
-                num = Integer.parseInt(line);
+                winsTwo = Integer.parseInt(line);
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
-        return num;
+        return winsTwo;
     }
 
 }
