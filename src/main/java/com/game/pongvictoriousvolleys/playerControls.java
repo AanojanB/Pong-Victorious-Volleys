@@ -47,13 +47,13 @@ public class playerControls implements Initializable {
 
     private double playerOneUpSpeedY = 7;
     private double playerOneDownSpeedY = 7;
-    private double playerOneForwardSpeedX = 3;
-    private double playerOneBackwardSpeedX = 3;
+    private double playerOneForwardSpeedX = 5;
+    private double playerOneBackwardSpeedX = 5;
 
     private double playerTwoUpSpeedY = 7;
     private double playerTwoDownSpeedY = 7;
-    private double playerTwoForwardSpeedX = 3;
-    private double playerTwoBackwardSpeedX = 3;
+    private double playerTwoForwardSpeedX = 5;
+    private double playerTwoBackwardSpeedX = 5;
 
     private int winStreakOne = 0;
     private int winStreakTwo = 0;
@@ -144,11 +144,11 @@ public class playerControls implements Initializable {
         }
     };
 
-    double circleMovementX = .5;
-    double circleMovementY = .5;
-    int playerOneScore = 4;
+    double circleMovementX = 2.5;
+    double circleMovementY = 2.5;
+    int playerOneScore = 0;
     String stringOneScore = "";
-    int playerTwoScore = 4;
+    int playerTwoScore = 0;
     String stringTwoScore = "";
     String playerOneWins = "Player One Wins";
     String playerTwoWins = "Player Two Wins";
@@ -197,12 +197,12 @@ public class playerControls implements Initializable {
                 circleMovementX =-2.5;
                 playerTwoUpSpeedY = 7;
                 playerTwoDownSpeedY = 7;
-                playerTwoForwardSpeedX = 3;
-                playerTwoBackwardSpeedX = 3;
+                playerTwoForwardSpeedX = 5;
+                playerTwoBackwardSpeedX = 5;
                 playerOneUpSpeedY = 7;
                 playerOneDownSpeedY = 7;
-                playerOneForwardSpeedX = 3;
-                playerOneBackwardSpeedX = 3;
+                playerOneForwardSpeedX = 5;
+                playerOneBackwardSpeedX = 5;
             }
 
             //Change values, values should be when the ball is completely out the screen on the left end
@@ -216,12 +216,12 @@ public class playerControls implements Initializable {
                 circleMovementX =2.5;
                 playerTwoUpSpeedY = 7;
                 playerTwoDownSpeedY = 7;
-                playerTwoForwardSpeedX = 3;
-                playerTwoBackwardSpeedX = 3;
+                playerTwoForwardSpeedX = 5;
+                playerTwoBackwardSpeedX = 5;
                 playerOneUpSpeedY = 7;
                 playerOneDownSpeedY = 7;
-                playerOneForwardSpeedX = 3;
-                playerOneBackwardSpeedX = 3;
+                playerOneForwardSpeedX = 5;
+                playerOneBackwardSpeedX = 5;
             }
 
             if (playerOneScore == 10) {
